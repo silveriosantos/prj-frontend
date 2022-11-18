@@ -1,11 +1,9 @@
 <!DOCTYPE html><!-- indica que pode usar tags do HTML5 -->
 <html>
-
 <head>
     <title>Exemplo CRUD</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-
 <body>
     <style>
         tbody {
@@ -13,17 +11,29 @@
         }
     </style>
     <div class="container">
-        <h4>Exemplo CRUD usando a api back-end e bootstrap</h4>
+        <h4>
+            <text-align>
+                <center>
+                    Exemplo CRUD usando a api back-end e bootstrap
+                </center>
+            </text-align>
+        </h4>
         <input type="hidden" id="id">
         <label for="nome">Nome:</label>
         <input type="text" id="nome" class="form-control">
         <label for="email">Email:</label>
         <input type="text" id="email" class="form-control">
         <br>
-        <input type="button" value="Gravar" onclick="incluir()" class="btn btn-primary">
+        <input type="button" value="Gravar" onclick="gravar()" class="btn btn-primary">
         <input type="button" value="Novo" onclick="limpar()" class="btn btn-light">
         <input type="button" value="Apagar" onclick="apagar()" class="btn btn-danger">
-        <h4>Lista de Pessoas</h4>
+        <h4>
+            <text-align>
+                <center>
+                    LISTA DE PESSOAS
+                </center>
+            </text-align>
+        </h4>
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -38,87 +48,7 @@
             <tbody id="lista">
             </tbody>
         </table>
-    </div>  
-    <script>
-        // request via JavaScript ajax 4 passos
-        // 01 criar a váriavel
-        ajax = new XMLHttpRequest();
-        var listar;
-        var api = "https://silverio-santos.herokuapp.com/api/usuario/"
-
-        function listar() {
-            // 02 definição do nosso request (forma e endereço)
-            ajax.open("GET", api);            
-            // 03 manda de fato a request
-            ajax.send();
-            // 04 execução quando tiver a devolutiva do request
-            ajax.onload = function () {
-                lista = this.responseText;
-                console.log(lista);
-                lista = JSON.parse(lista);
-                console.log(lista);
-                texto = "";
-
-                i = 0;
-                for (const u of lista) {
-                    texto += `<tr onclick='editar(${i})'><td>${u.nome}</td><td>${u.email}</td></tr>`;
-                    i++;
-                }
-                document.getElementById('lista').innerHTML = texto;
-            }
-        }
-        function incluir() {
-            //alert("Estamos dentro da function incluir");
-            var usuario = {};
-            usuario.nome = document.getElementById("nome").value;
-            usuario.email = document.getElementById("email").value;
-            //console.log(usuario);
-
-            usuario.id = document.getElementById("id").value;
-            if (usuario.id > 0) {
-                metodo = "PUT";
-            } else {
-                metodo = "POST";
-            }
-
-            ajax.open(metodo, api);
-            ajax.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-
-            ajax.send(JSON.stringify(usuario));
-
-            ajax.onload = function () {
-                console.log(this.responseText);
-                listar();
-
-            }
-
-        }
-
-        function limpar() {
-            document.getElementById("nome").value = "";
-            document.getElementById("email").value = "";
-            document.getElementById("id").value = "";
-        }
-
-        function editar() {
-            u = lista[i];
-            document.getElementById("nome").value = u.nome;
-            document.getElementById("email").value = u.email;
-            document.getElementById("id").value = u.id;
-        }
-
-        function apagar() {
-            id = document.getElementById("id").value;
-            ajax.open("DELETE",api + id);
-            ajax.send();
-            ajax.onload = function()  {
-                alert(this.responseText);
-                listar();
-                limpar();
-            }              
-        }
-
-        listar();
-    </script>
+    </div>
+    <script src="js/script.js"></script>
 </body>
 </html>
