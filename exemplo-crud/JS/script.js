@@ -2,7 +2,7 @@
 // 01 criar a váriavel
 ajax = new XMLHttpRequest();
 var lista;
-var api = "https://silverio-santos.herokuapp.com/api/usuario/";
+var api = "https://silverio-santos.herokuapp.com/api/produto/";
 
 function listar() {
     // 02 definição do nosso request (forma e endereço)
